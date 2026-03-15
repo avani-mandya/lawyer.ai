@@ -1,23 +1,15 @@
 import streamlit as st
 import google.generativeai as genai
 
-# ==========================================
-# 1. PASTE YOUR SISTERS KEY BELOW
-# ==========================================
-#API_KEY = "AIzaSyDQzMW1CU_betZ62fglE0D3kZAYfCkuGgc"
-API_KEY = "AIzaSyBfriVeZ7x1WYG5mjP4SMqtLvfPKEPHpq8"
-
 def main():
     st.set_page_config(page_title="Legal War Room", page_icon="⚖️")
     st.title("⚖️ Courtroom Practice Simulator")
 
-    if API_KEY == "PASTE_KEY_HERE":
-        st.error("❌ You need to paste the API key first!")
-        return
+    api_key = st.secrets["GEMINI_API_KEY"]	
 
     # 2. THE FIX: Using 'transport=rest' and a newer model
     try:
-        genai.configure(api_key=API_KEY, transport='rest')
+        genai.configure(api_key=api_key, transport='rest')
         # We are using gemini-2.0-flash because older versions (1.5) are returning 404 for some
         model = genai.GenerativeModel('gemini-2.5-flash')
     except Exception as e:
